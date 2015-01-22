@@ -20,13 +20,6 @@ app.service('itunesService', function($http, $q){
 
   this.getArtist = function(name) {
   	var deferred = $q.defer();
-  	$http.get('https://itunes.apple.com/search?term=' + artist + '&callback=JSON_CALLBACK').
-  		success(function() {
-  			return $http;
-  		}).
-  		error(function() {
-  			return error;
-  		});
   	return deferred.promise;
   };
 });
