@@ -46,12 +46,11 @@ app.controller('mainCtrl', function($scope, itunesService){
   //so you could use .then in this function.
 
   $scope.getSongData = function() {
-    itunesService.getArtist('Lorde');
+    var p = itunesService.getArtist('Lorde');
+    p.then(function(data) {
+      console.log(data);
+    })
   };
-
-// .then(function() {
-
-// })
 
   //Check that the above method is working by entering a 
   //name into the input field on your web app, and then 
