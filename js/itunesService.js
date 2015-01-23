@@ -18,8 +18,9 @@ app.service('itunesService', function($http, $q){
   //own promise in order to manipulate the data before you 
   //resolve it.
 
-  this.getArtist = function(name) {
-  	var deferred = $q.defer();
-  	return deferred.promise;
+  this.getArtist = function(artist) {
+  	return $http.jsonp('http://itunes.apple.com/search?term=' + artist + '&callback=JSON_CALLBACK');
+  	// var deferred = $q.defer();
+  	// return deferred.promise;
   };
 });
