@@ -48,7 +48,7 @@ app.controller('mainCtrl', function($scope, itunesService){
   $scope.getSongData = function() {
     var p = itunesService.getArtist('Lorde');
     p.then(function(data) {
-      console.log(data);
+      console.log(data.data.results[0]);
     })
   };
 
