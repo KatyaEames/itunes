@@ -14,7 +14,7 @@ app.controller('mainCtrl', function($scope, itunesService){
   $scope.gridOptions = { 
       data: 'songData',
       height: '110px',
-      sortInfo: {fields: ['Song', 'Artist', 'Collection', 'Type'], directions: ['asc']},
+      sortInfo: {fields: ['Song', 'Artist', 'Collection', 'Type', 'Title'], directions: ['asc']},
       columnDefs: [
         {field: 'Play', displayName: 'Play', width: '40px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><a href="{{row.getProperty(col.field)}}"><img src="http://www.icty.org/x/image/Miscellaneous/play_icon30x30.png"></a></div>'},
         {field: 'Artist', displayName: 'Artist'},
@@ -22,6 +22,7 @@ app.controller('mainCtrl', function($scope, itunesService){
         {field: 'AlbumArt', displayName: 'Album Art', width: '110px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><img src="{{row.getProperty(col.field)}}"></div>'},
         {field: 'Type', displayName: 'Type'},
         {field: 'CollectionPrice', displayName: 'Collection Price'},
+        {field: 'Title', displayName: 'Title'},
       ]
   };
 
@@ -45,12 +46,7 @@ app.controller('mainCtrl', function($scope, itunesService){
   //Also note that that method should be retuning a promise, 
   //so you could use .then in this function.
 
-  $scope.getSongData = function() {
-    var p = itunesService.getArtist('Lorde');
-    p.then(function(data) {
-      console.log(data.data.results[0]);
-    })
-  };
+
 
   //Check that the above method is working by entering a 
   //name into the input field on your web app, and then 
@@ -83,7 +79,27 @@ app.controller('mainCtrl', function($scope, itunesService){
   //into your new array objects that look like the above 
   //data.
 
-    //Code here
+  $scope.getSongData = function() {
+    itunesService.getArtist($scope.artist)
+      .then(function(json) {
+        var artists = [];
+        var results = json.data.results;
+        for(var i = 0; i < results.length; i++) {
+          var artist = results[i];
+          artists.push(
+            {
+              AlbumArt: artist.artworkUrl30,
+              Artist: artist.artistName,
+              Collection: artist.colectionName,
+              Play: artist.previewUrl,
+              Type: artist.kind,
+              Title: artist.trackCensoredName
+            }
+          );
+      }
+      $scope.songData = artists;
+    })
+  };
 
 
   //Once you have that final data array, you simply need to 
@@ -92,7 +108,7 @@ app.controller('mainCtrl', function($scope, itunesService){
   //this ($scope.songData = myFinalArray) then ng-grid will 
   //see that and populate the page.
 
-    //Code here
+
 });
 
 
