@@ -32,7 +32,6 @@ app.controller('mainCtrl', function($scope, itunesService){
 
   //First inject itunesService into your controller.
 
-  itunesService.getArtist('Lorde');
 
   //Now write a function that will call the method on the 
   //itunesService that is responsible for getting the data 
@@ -45,12 +44,14 @@ app.controller('mainCtrl', function($scope, itunesService){
   //we could use.
   //Also note that that method should be retuning a promise, 
   //so you could use .then in this function.
-    
-var submit = function() {
 
-}.then(function() {
+  $scope.getSongData = function() {
+    itunesService.getArtist('Lorde');
+  };
 
-})
+// .then(function() {
+
+// })
 
   //Check that the above method is working by entering a 
   //name into the input field on your web app, and then 
